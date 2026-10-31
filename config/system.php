@@ -4,6 +4,7 @@ return [
     [
         'key' => 'sales.payment_methods.manual_pagomovil',
         'name' => 'manual_payments::app.methods.pagomovil',
+        'info' => 'manual_payments::app.admin.system.pagomovil_info',
         'sort' => 10,
         'fields' => [
             [
@@ -57,6 +58,7 @@ return [
     [
         'key' => 'sales.payment_methods.manual_bank_transfer',
         'name' => 'manual_payments::app.methods.bank_transfer',
+        'info' => 'manual_payments::app.admin.system.bank_transfer_info',
         'sort' => 11,
         'fields' => [
             [
@@ -110,6 +112,7 @@ return [
     [
         'key' => 'sales.payment_methods.manual_zelle',
         'name' => 'manual_payments::app.methods.zelle',
+        'info' => 'manual_payments::app.admin.system.zelle_info',
         'sort' => 12,
         'fields' => [
             [
@@ -163,6 +166,7 @@ return [
     [
         'key' => 'sales.payment_methods.manual_binance',
         'name' => 'manual_payments::app.methods.binance',
+        'info' => 'manual_payments::app.admin.system.binance_info',
         'sort' => 13,
         'fields' => [
             [
@@ -216,6 +220,7 @@ return [
     [
         'key' => 'sales.payment_methods.manual_whatsapp',
         'name' => 'manual_payments::app.methods.whatsapp',
+        'info' => 'manual_payments::app.admin.system.whatsapp_info',
         'sort' => 14,
         'fields' => [
             [

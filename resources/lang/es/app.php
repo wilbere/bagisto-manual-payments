@@ -64,6 +64,14 @@ return [
     ],
 
     'admin' => [
+        'system' => [
+            'pagomovil_info' => 'Habilita pagos en Bolívares mediante Pago Móvil interbancario con conciliación de comprobantes.',
+            'bank_transfer_info' => 'Habilita transferencias bancarias nacionales en Bolívares con carga de referencia y captura.',
+            'zelle_info' => 'Habilita pagos internacionales en Dólares (USD) a través de Zelle.',
+            'binance_info' => 'Habilita pagos en criptomonedas y USDT a través de Binance Pay / Paymail.',
+            'whatsapp_info' => 'Habilita flujo híbrido de checkout con reserva de inventario y atención directa por WhatsApp.',
+        ],
+
         'whatsapp' => [
             'phone_title' => 'Número de WhatsApp de la Tienda',
             'phone_info' => 'Número con código de país para recibir pedidos (ej. +58 414 1234567 o 584141234567).',

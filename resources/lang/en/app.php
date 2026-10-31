@@ -65,6 +65,14 @@ return [
     ],
 
     'admin' => [
+        'system' => [
+            'pagomovil_info' => 'Enable payments in Bolivares via Pago Movil with manual proof verification.',
+            'bank_transfer_info' => 'Enable national bank transfers in Bolivares with manual proof verification.',
+            'zelle_info' => 'Enable payments in USD via Zelle with manual proof verification.',
+            'binance_info' => 'Enable cryptocurrency and USDT payments via Binance Pay.',
+            'whatsapp_info' => 'Enable hybrid checkout with inventory reservation and WhatsApp support.',
+        ],
+
         'whatsapp' => [
             'phone_title' => 'Store WhatsApp Phone Number',
             'phone_info' => 'International number with country code (e.g. +58 414 1234567 or 584141234567).',
