@@ -31,6 +31,7 @@ class ManualPaymentAccount extends Model
     public const TYPE_BANK_TRANSFER = 'bank_transfer';
     public const TYPE_ZELLE = 'zelle';
     public const TYPE_BINANCE = 'binance';
+    public const TYPE_WHATSAPP = 'whatsapp';
 
     protected $table = 'manual_payment_accounts';
 
@@ -66,6 +67,7 @@ class ManualPaymentAccount extends Model
             self::TYPE_BANK_TRANSFER => trans('manual_payments::app.methods.bank_transfer'),
             self::TYPE_ZELLE => trans('manual_payments::app.methods.zelle'),
             self::TYPE_BINANCE => trans('manual_payments::app.methods.binance'),
+            self::TYPE_WHATSAPP => trans('manual_payments::app.methods.whatsapp'),
             default => ucfirst($this->type),
         };
     }

@@ -25,10 +25,21 @@ it('can create and query manual payment accounts with scopes', function () {
         'sort_order' => 2,
     ]);
 
-    expect(ManualPaymentAccount::active()->count())->toBe(1)
+    $activeWhatsapp = ManualPaymentAccount::create([
+        'type' => ManualPaymentAccount::TYPE_WHATSAPP,
+        'title' => 'WhatsApp Soporte',
+        'holder_name' => 'Carlos Perez',
+        'phone' => '+584141234567',
+        'status' => true,
+        'sort_order' => 3,
+    ]);
+
+    expect(ManualPaymentAccount::active()->count())->toBe(2)
         ->and(ManualPaymentAccount::ofType(ManualPaymentAccount::TYPE_PAGOMOVIL)->count())->toBe(1)
         ->and(ManualPaymentAccount::ofType(ManualPaymentAccount::TYPE_ZELLE)->count())->toBe(1)
-        ->and($activePm->type_name)->toBe(trans('manual_payments::app.methods.pagomovil'));
+        ->and(ManualPaymentAccount::ofType(ManualPaymentAccount::TYPE_WHATSAPP)->count())->toBe(1)
+        ->and($activePm->type_name)->toBe(trans('manual_payments::app.methods.pagomovil'))
+        ->and($activeWhatsapp->type_name)->toBe(trans('manual_payments::app.methods.whatsapp'));
 });
 
 it('verifies receipt status lifecycle and submission checks', function () {

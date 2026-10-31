@@ -24,6 +24,7 @@ class StoreAccountRequest extends FormRequest
                     ManualPaymentAccount::TYPE_BANK_TRANSFER,
                     ManualPaymentAccount::TYPE_ZELLE,
                     ManualPaymentAccount::TYPE_BINANCE,
+                    ManualPaymentAccount::TYPE_WHATSAPP,
                 ]),
             ],
             'title' => 'required|string|max:255',

@@ -93,6 +93,7 @@ class ManualPaymentAccountsDataGrid extends DataGrid
                     'bank_transfer' => '<span class="badge badge-md badge-info">Transferencia</span>',
                     'zelle' => '<span class="badge badge-md badge-primary">Zelle</span>',
                     'binance' => '<span class="badge badge-md badge-warning">Binance Pay</span>',
+                    'whatsapp' => '<span class="badge badge-md badge-success">WhatsApp</span>',
                     default => e($row->type),
                 };
             },

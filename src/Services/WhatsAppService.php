@@ -119,6 +119,13 @@ class WhatsAppService
             $rawPhone = core()->getConfigData('sales.payment_methods.manual_whatsapp.phone');
         }
 
+        if (empty($rawPhone) && class_exists(\Wilbere\BagistoManualPayments\Models\ManualPaymentAccount::class)) {
+            $rawPhone = \Wilbere\BagistoManualPayments\Models\ManualPaymentAccount::query()
+                ->active()
+                ->ofType(\Wilbere\BagistoManualPayments\Models\ManualPaymentAccount::TYPE_WHATSAPP)
+                ->value('phone');
+        }
+
         $cleanPhone = $this->sanitizePhone($rawPhone);
 
         if (empty($cleanPhone)) {
