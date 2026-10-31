@@ -1,0 +1,69 @@
+{
+    "name": "wilbere/bagisto-manual-payments",
+    "description": "Pasarela de pagos manuales verificados (Pago Móvil, Transferencias, Zelle, Binance Pay) para Bagisto 2.5+",
+    "keywords": [
+        "bagisto",
+        "laravel",
+        "ecommerce",
+        "venezuela",
+        "pago-movil",
+        "zelle",
+        "binance-pay",
+        "manual-payments",
+        "payment-gateway"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "wilbere",
+            "homepage": "https://github.com/wilbere"
+        }
+    ],
+    "homepage": "https://github.com/wilbere/bagisto-manual-payments",
+    "support": {
+        "issues": "https://github.com/wilbere/bagisto-manual-payments/issues",
+        "source": "https://github.com/wilbere/bagisto-manual-payments"
+    },
+    "require": {
+        "php": "^8.4|^8.5",
+        "illuminate/console": "^11.0|^12.0|^13.0",
+        "illuminate/contracts": "^11.0|^12.0|^13.0",
+        "illuminate/database": "^11.0|^12.0|^13.0",
+        "illuminate/http": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/validation": "^11.0|^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wilbere\\BagistoManualPayments\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wilbere\\BagistoManualPayments\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wilbere\\BagistoManualPayments\\Providers\\ManualPaymentsServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
