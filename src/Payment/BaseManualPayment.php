@@ -15,12 +15,12 @@ if (! class_exists(\Webkul\Payment\Payment\Payment::class)) {
 
         public function getConfigData($field)
         {
-            return true;
+            return null;
         }
 
         public function isAvailable()
         {
-            return (bool) $this->getConfigData('active');
+            return true;
         }
 
         public function getTitle()
@@ -48,6 +48,20 @@ use Webkul\Payment\Payment\Payment;
 
 abstract class BaseManualPayment extends Payment
 {
+    /**
+     * Verifica si el método de pago está habilitado en Bagisto.
+     */
+    public function isAvailable(): bool
+    {
+        $active = $this->getConfigData('active');
+
+        if ($active !== null) {
+            return (bool) $active;
+        }
+
+        return (bool) config('payment_methods.'.$this->getCode().'.active', true);
+    }
+
     /**
      * URL de redirección post-checkout para procesar la orden y mostrar
      * las instrucciones de pago con subida de comprobante.

@@ -3,6 +3,7 @@
 namespace Wilbere\BagistoManualPayments\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Wilbere\BagistoManualPayments\Console\ExpirePendingOrdersCommand;
 use Wilbere\BagistoManualPayments\Console\InstallCommand;
@@ -15,6 +16,7 @@ class ManualPaymentsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/manual-payments.php', 'manual-payments');
         $this->mergeConfigFrom(__DIR__.'/../../config/payment-methods.php', 'payment_methods');
+        $this->mergeConfigFrom(__DIR__.'/../../config/system.php', 'core');
         $this->mergeConfigFrom(__DIR__.'/../../config/menu.php', 'menu.admin');
         $this->mergeConfigFrom(__DIR__.'/../../config/acl.php', 'acl');
 
@@ -37,6 +39,8 @@ class ManualPaymentsServiceProvider extends ServiceProvider
             __DIR__.'/../../resources/lang' => resource_path('lang/vendor/manual_payments'),
         ], 'manual-payments-config');
 
+        $this->registerViewRenderEvents();
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
@@ -45,6 +49,19 @@ class ManualPaymentsServiceProvider extends ServiceProvider
         }
 
         $this->registerSchedule();
+    }
+
+    protected function registerViewRenderEvents(): void
+    {
+        // Enlace para subir comprobante en la vista de pedido de la cuenta del cliente
+        Event::listen('bagisto.shop.customers.account.orders.view.before', static function ($viewRenderEventManager) {
+            $viewRenderEventManager->addTemplate('manual_payments::shop.account.order-payment-banner');
+        });
+
+        // Banner en caso de caer en la vista genérica de checkout exitoso
+        Event::listen('bagisto.shop.checkout.success.continue-shopping.before', static function ($viewRenderEventManager) {
+            $viewRenderEventManager->addTemplate('manual_payments::shop.checkout.success-banner');
+        });
     }
 
     protected function registerSchedule(): void

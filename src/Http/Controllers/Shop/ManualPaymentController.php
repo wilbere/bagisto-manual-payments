@@ -37,6 +37,10 @@ class ManualPaymentController extends Controller
             $cart = Cart::getCart();
 
             if (! $cart) {
+                if ($lastToken = session('manual_payment_token')) {
+                    return redirect()->route('shop.manual_payments.receipt.show', ['token' => $lastToken]);
+                }
+
                 return redirect()->route('shop.checkout.cart.index');
             }
 
@@ -51,6 +55,8 @@ class ManualPaymentController extends Controller
             session()->flash('order_id', $order->id);
 
             $receipt = $this->reconciliationService->createReceiptForOrder($order, $paymentMethod);
+
+            session()->put('manual_payment_token', $receipt->token);
 
             return redirect()->route('shop.manual_payments.receipt.show', ['token' => $receipt->token]);
         }
