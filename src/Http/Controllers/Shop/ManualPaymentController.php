@@ -12,11 +12,13 @@ use Wilbere\BagistoManualPayments\Http\Requests\SubmitReceiptRequest;
 use Wilbere\BagistoManualPayments\Models\ManualPaymentAccount;
 use Wilbere\BagistoManualPayments\Models\ManualPaymentReceipt;
 use Wilbere\BagistoManualPayments\Services\ReceiptReconciliationService;
+use Wilbere\BagistoManualPayments\Services\WhatsAppService;
 
 class ManualPaymentController extends Controller
 {
     public function __construct(
         protected ReceiptReconciliationService $reconciliationService,
+        protected WhatsAppService $whatsAppService,
         protected ?OrderRepository $orderRepository = null
     ) {
         if (! $this->orderRepository && class_exists(OrderRepository::class)) {
@@ -88,11 +90,16 @@ class ManualPaymentController extends Controller
 
         $banks = config('manual-payments.banks', []);
 
+        $whatsAppUrl = $this->whatsAppService->generateWhatsAppUrl($receipt->order, $receipt);
+        $autoRedirectWhatsApp = (bool) (function_exists('core') ? core()->getConfigData('sales.payment_methods.manual_whatsapp.auto_redirect') : false);
+
         return view('manual_payments::shop.checkout.receipt-form', [
             'receipt' => $receipt,
             'order' => $receipt->order,
             'accounts' => $accounts,
             'banks' => $banks,
+            'whatsAppUrl' => $whatsAppUrl,
+            'autoRedirectWhatsApp' => $autoRedirectWhatsApp,
         ]);
     }
 

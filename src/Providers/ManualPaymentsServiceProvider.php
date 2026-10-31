@@ -22,6 +22,7 @@ class ManualPaymentsServiceProvider extends ServiceProvider
 
         $this->app->singleton(AmountResolverService::class);
         $this->app->singleton(ReceiptReconciliationService::class);
+        $this->app->singleton(\Wilbere\BagistoManualPayments\Services\WhatsAppService::class);
     }
 
     public function boot(): void

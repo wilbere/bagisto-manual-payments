@@ -136,6 +136,56 @@
             </div>
         @endif
 
+        <!-- WhatsApp Dedicated Card (When Payment Method is manual_whatsapp) -->
+        @if ($receipt->payment_method === 'manual_whatsapp' && ! empty($whatsAppUrl))
+            <div class="mt-8 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 p-6 md:p-8 shadow-md">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="p-3 bg-emerald-600 text-white rounded-2xl shadow-md">
+                            <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.058.376-.058c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.158.57 4.184 1.571 5.938l-1.668 6.096 6.262-1.642c1.704.929 3.654 1.458 5.735 1.458 6.627 0 12-5.373 12-12s-5.373-12-12-12z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-emerald-950">
+                                @lang('manual_payments::app.shop.whatsapp_banner_title')
+                            </h3>
+                            <p class="text-sm text-emerald-800 mt-1 max-w-xl">
+                                @lang('manual_payments::app.shop.whatsapp_banner_desc')
+                            </p>
+                        </div>
+                    </div>
+
+                    <a
+                        href="{{ $whatsAppUrl }}"
+                        target="_blank"
+                        id="btn-whatsapp-action"
+                        class="w-full md:w-auto px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer text-base"
+                    >
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                        </svg>
+                        @lang('manual_payments::app.shop.btn_open_whatsapp')
+                    </a>
+                </div>
+            </div>
+        @elseif (! empty($whatsAppUrl))
+            <!-- Support banner for other payment methods -->
+            <div class="mt-8 rounded-2xl border border-gray-200 bg-white p-4 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-emerald-600 text-2xl">💬</span>
+                    <span class="text-sm font-medium text-gray-700">@lang('manual_payments::app.shop.whatsapp_support_question')</span>
+                </div>
+                <a
+                    href="{{ $whatsAppUrl }}"
+                    target="_blank"
+                    class="px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-300 transition flex items-center gap-1.5"
+                >
+                    @lang('manual_payments::app.shop.whatsapp_support_btn')
+                </a>
+            </div>
+        @endif
+
         <!-- Bank Accounts Section -->
         @if ($accounts->isNotEmpty())
             <div class="mt-10">
@@ -424,5 +474,12 @@
                 }
             });
         }
+
+        @if ($receipt->payment_method === 'manual_whatsapp' && ! empty($autoRedirectWhatsApp) && ! empty($whatsAppUrl) && $receipt->isPendingSubmission())
+            // Redirección automática de cortesía tras 1.5s
+            setTimeout(function() {
+                window.location.href = '{!! $whatsAppUrl !!}';
+            }, 1500);
+        @endif
     </script>
 </x-shop::layouts>

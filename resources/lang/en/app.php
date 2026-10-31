@@ -6,6 +6,7 @@ return [
         'bank_transfer' => 'National Bank Transfer (VES)',
         'zelle' => 'Zelle (USD)',
         'binance' => 'Binance Pay / Crypto (USDT)',
+        'whatsapp' => 'Order via WhatsApp (Confirm Stock & Pay)',
     ],
 
     'status' => [
@@ -56,9 +57,20 @@ return [
         'rejected_notice' => 'Your payment proof was reviewed and could not be verified.',
         'rejection_reason_label' => 'Reason provided by store:',
         'expired_notice' => 'The time limit for reporting this payment has expired and the inventory hold was canceled.',
+        'whatsapp_banner_title' => 'Immediate WhatsApp Confirmation',
+        'whatsapp_banner_desc' => 'Your order has been placed and your inventory is temporarily reserved. Please open WhatsApp to confirm stock availability with our team before transferring.',
+        'btn_open_whatsapp' => 'Open WhatsApp & Confirm Order',
+        'whatsapp_support_question' => 'Have questions about stock availability or need personal assistance?',
+        'whatsapp_support_btn' => 'Chat on WhatsApp',
     ],
 
     'admin' => [
+        'whatsapp' => [
+            'phone_title' => 'Store WhatsApp Phone Number',
+            'phone_info' => 'International number with country code (e.g. +58 414 1234567 or 584141234567).',
+            'auto_redirect_title' => 'Auto-Redirect to WhatsApp',
+            'auto_redirect_info' => 'If enabled, attempts to automatically open WhatsApp in a new tab upon landing on the confirmation screen.',
+        ],
         'menu' => [
             'reconciliation' => 'Manual Payments',
             'accounts' => 'Payment Accounts',

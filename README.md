@@ -18,6 +18,7 @@ Resuelve la fricción del checkout creando un flujo post-pedido seguro con reser
   * `manual_bank_transfer`: Transferencias bancarias nacionales en Bolívares (VES).
   * `manual_zelle`: Pagos directos en dólares (USD).
   * `manual_binance`: Transferencias inmediatas sin comisiones en USDT vía Binance Pay.
+  * `manual_whatsapp`: **Checkout Híbrido con Salida a WhatsApp** (reserva inventario en Bagisto y abre WhatsApp con el resumen de compra, tasa BCV y enlace al comprobante para cerrar la venta con atención humana).
   * *Cada método puede encenderse o apagarse de forma independiente en Configuración › Ventas › Métodos de Pago.*
 
 * **Catálogo de Cuentas Receptoras Dinámicas**:

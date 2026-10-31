@@ -3,6 +3,7 @@
 use Wilbere\BagistoManualPayments\Payment\BankTransfer;
 use Wilbere\BagistoManualPayments\Payment\Binance;
 use Wilbere\BagistoManualPayments\Payment\PagoMovil;
+use Wilbere\BagistoManualPayments\Payment\WhatsApp;
 use Wilbere\BagistoManualPayments\Payment\Zelle;
 
 return [
@@ -40,5 +41,14 @@ return [
         'description' => 'Transferencia inmediata sin comisiones en USDT vía Binance Pay.',
         'active' => true,
         'sort' => 4,
+    ],
+
+    'manual_whatsapp' => [
+        'class' => WhatsApp::class,
+        'code' => 'manual_whatsapp',
+        'title' => 'Acordar por WhatsApp (Confirmar Stock y Pago)',
+        'description' => 'Reserva el pedido en la tienda y coordina el pago con atención personalizada por WhatsApp.',
+        'active' => true,
+        'sort' => 5,
     ],
 ];

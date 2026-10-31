@@ -6,6 +6,7 @@ return [
         'bank_transfer' => 'Transferencia Bancaria Nacional (VES)',
         'zelle' => 'Zelle (USD)',
         'binance' => 'Binance Pay / Crypto (USDT)',
+        'whatsapp' => 'Acordar por WhatsApp (Confirmar Stock y Pago)',
     ],
 
     'status' => [
@@ -55,10 +56,20 @@ return [
         'approved_notice' => '¡Pago Verificado con éxito! Tu orden ha sido facturada y ha pasado a preparación de despacho.',
         'rejected_notice' => 'Tu comprobante de pago fue revisado y no pudo ser conciliado.',
         'rejection_reason_label' => 'Motivo indicado por la tienda:',
-        'expired_notice' => 'El tiempo límite para reportar el pago de este pedido ha expirado y la reserva de inventario fue cancelada.',
+        'whatsapp_banner_title' => 'Confirmación Inmediata por WhatsApp',
+        'whatsapp_banner_desc' => 'Tu pedido ha sido registrado con éxito y tu inventario está reservado temporalmente. Abre WhatsApp para confirmar disponibilidad con nuestro equipo antes de transferir.',
+        'btn_open_whatsapp' => 'Abrir WhatsApp y Confirmar Pedido',
+        'whatsapp_support_question' => '¿Tienes dudas sobre disponibilidad o necesitas asistencia personalizada?',
+        'whatsapp_support_btn' => 'Chatear por WhatsApp',
     ],
 
     'admin' => [
+        'whatsapp' => [
+            'phone_title' => 'Número de WhatsApp de la Tienda',
+            'phone_info' => 'Número con código de país para recibir pedidos (ej. +58 414 1234567 o 584141234567).',
+            'auto_redirect_title' => 'Redirección Automática a WhatsApp',
+            'auto_redirect_info' => 'Si está activo, intentará abrir la ventana de WhatsApp automáticamente al cargar la pantalla de confirmación.',
+        ],
         'menu' => [
             'reconciliation' => 'Pagos Manuales',
             'accounts' => 'Cuentas de Pago',
