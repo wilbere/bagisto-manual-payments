@@ -81,6 +81,7 @@ class ManualPaymentController extends Controller
             'manual_bank_transfer' => ManualPaymentAccount::TYPE_BANK_TRANSFER,
             'manual_zelle' => ManualPaymentAccount::TYPE_ZELLE,
             'manual_binance' => ManualPaymentAccount::TYPE_BINANCE,
+            'manual_whatsapp' => ManualPaymentAccount::TYPE_WHATSAPP,
             default => null,
         };
 

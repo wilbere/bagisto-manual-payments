@@ -59,6 +59,7 @@
                     <select
                         name="type"
                         id="account-type"
+                        onchange="window.syncAccountFields && window.syncAccountFields(this.value)"
                         required
                         class="rounded-md border border-gray-300 py-2 px-3 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
@@ -166,7 +167,7 @@
                 </div>
 
                 <!-- Phone and Email -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div id="group-contact-row" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Phone -->
                     <div id="group-phone" class="flex flex-col gap-1.5">
                         <label id="label-phone" class="text-xs font-semibold text-gray-700 dark:text-gray-300">
@@ -271,133 +272,160 @@
         </div>
     </form>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const typeSelect = document.getElementById('account-type');
-            if (!typeSelect) return;
+    @pushOnce('scripts')
+        <script>
+            (function () {
+                function syncAccountFields(type) {
+                    var select = document.getElementById('account-type');
+                    if (!type && select) {
+                        type = select.value;
+                    }
+                    if (!type) {
+                        type = 'pagomovil';
+                    }
 
-            const groupBankDetails = document.getElementById('group-bank-details');
-            const groupAccountNumber = document.getElementById('group-account-number');
-            const groupHolderId = document.getElementById('group-holder-id');
-            const groupHolderName = document.getElementById('group-holder-name');
-            const groupPhone = document.getElementById('group-phone');
-            const groupEmail = document.getElementById('group-email');
-            const groupBinanceId = document.getElementById('group-binance-id');
-            const groupQrCode = document.getElementById('group-qr-code');
+                    var groupBankDetails   = document.getElementById('group-bank-details');
+                    var groupAccountNumber = document.getElementById('group-account-number');
+                    var groupHolderId      = document.getElementById('group-holder-id');
+                    var groupHolderName    = document.getElementById('group-holder-name');
+                    var groupContactRow    = document.getElementById('group-contact-row');
+                    var groupPhone         = document.getElementById('group-phone');
+                    var groupEmail         = document.getElementById('group-email');
+                    var groupBinanceId     = document.getElementById('group-binance-id');
+                    var groupQrCode        = document.getElementById('group-qr-code');
 
-            const labelHolderName = document.getElementById('label-holder-name');
-            const labelPhone = document.getElementById('label-phone');
-            const labelEmail = document.getElementById('label-email');
+                    var labelHolderName    = document.getElementById('label-holder-name');
+                    var labelPhone         = document.getElementById('label-phone');
+                    var labelEmail         = document.getElementById('label-email');
 
-            const inputHolderName = document.getElementById('input-holder-name');
-            const inputPhone = document.getElementById('input-phone');
-            const inputEmail = document.getElementById('input-email');
+                    var inputHolderName    = document.getElementById('input-holder-name');
+                    var inputPhone         = document.getElementById('input-phone');
+                    var inputEmail         = document.getElementById('input-email');
 
-            function toggle(el, show) {
-                if (!el) return;
-                if (show) {
-                    el.classList.remove('hidden');
-                } else {
-                    el.classList.add('hidden');
-                }
-            }
+                    function setVisibility(el, visible) {
+                        if (!el) return;
+                        if (visible) {
+                            el.classList.remove('hidden');
+                            el.style.display = '';
+                        } else {
+                            el.classList.add('hidden');
+                            el.style.display = 'none';
+                        }
+                    }
 
-            function updateFields() {
-                const type = typeSelect.value;
+                    // 1. Bank details (Bank Name & Bank Code)
+                    var showBankDetails = (type === 'pagomovil' || type === 'bank_transfer');
+                    setVisibility(groupBankDetails, showBankDetails);
 
-                // Bank details (Bank name, bank code)
-                const showBankDetails = (type === 'pagomovil' || type === 'bank_transfer');
-                toggle(groupBankDetails, showBankDetails);
+                    // 2. Account Number (20 digits - only national bank transfer)
+                    var showAccountNumber = (type === 'bank_transfer');
+                    setVisibility(groupAccountNumber, showAccountNumber);
 
-                // Account number (20 digits - only for bank transfer)
-                const showAccountNumber = (type === 'bank_transfer');
-                toggle(groupAccountNumber, showAccountNumber);
+                    // 3. Holder ID (Cédula o RIF - only pagomovil & bank_transfer)
+                    var showHolderId = (type === 'pagomovil' || type === 'bank_transfer');
+                    setVisibility(groupHolderId, showHolderId);
+                    if (groupHolderName) {
+                        if (showHolderId) {
+                            groupHolderName.classList.remove('md:col-span-2');
+                        } else {
+                            groupHolderName.classList.add('md:col-span-2');
+                        }
+                    }
 
-                // Holder ID (Cédula/RIF - Pago Móvil & Bank Transfer)
-                const showHolderId = (type === 'pagomovil' || type === 'bank_transfer');
-                toggle(groupHolderId, showHolderId);
-                if (groupHolderName) {
-                    if (showHolderId) {
-                        groupHolderName.classList.remove('md:col-span-2');
-                    } else {
-                        groupHolderName.classList.add('md:col-span-2');
+                    // 4. Phone and Email
+                    var showPhone = (type === 'pagomovil' || type === 'zelle' || type === 'whatsapp');
+                    var showEmail = (type === 'zelle' || type === 'binance');
+
+                    setVisibility(groupPhone, showPhone);
+                    setVisibility(groupEmail, showEmail);
+                    setVisibility(groupContactRow, (showPhone || showEmail));
+
+                    if (groupPhone) {
+                        if (showPhone && !showEmail) {
+                            groupPhone.classList.add('md:col-span-2');
+                        } else {
+                            groupPhone.classList.remove('md:col-span-2');
+                        }
+                    }
+
+                    if (groupEmail) {
+                        if (showEmail && !showPhone) {
+                            groupEmail.classList.add('md:col-span-2');
+                        } else {
+                            groupEmail.classList.remove('md:col-span-2');
+                        }
+                    }
+
+                    // 5. Binance ID
+                    var showBinance = (type === 'binance');
+                    setVisibility(groupBinanceId, showBinance);
+
+                    // 6. QR Code
+                    var showQr = (type !== 'bank_transfer');
+                    setVisibility(groupQrCode, showQr);
+
+                    // 7. Contextual labels & placeholders
+                    if (labelHolderName) {
+                        if (type === 'whatsapp') {
+                            labelHolderName.innerHTML = 'Nombre del Asesor / Contacto <span class="text-rose-500">*</span>';
+                            if (inputHolderName) inputHolderName.placeholder = 'Ej. Soporte Ventas / Carlos Pérez';
+                        } else if (type === 'binance') {
+                            labelHolderName.innerHTML = 'Nombre o Alias en Binance <span class="text-rose-500">*</span>';
+                            if (inputHolderName) inputHolderName.placeholder = 'Ej. MiTienda Oficial';
+                        } else if (type === 'zelle') {
+                            labelHolderName.innerHTML = 'Nombre del Titular Zelle <span class="text-rose-500">*</span>';
+                            if (inputHolderName) inputHolderName.placeholder = 'Nombre registrado en la cuenta Zelle';
+                        } else {
+                            labelHolderName.innerHTML = 'Nombre del Titular <span class="text-rose-500">*</span>';
+                            if (inputHolderName) inputHolderName.placeholder = 'Nombre del Titular de la cuenta';
+                        }
+                    }
+
+                    if (labelPhone && inputPhone) {
+                        if (type === 'whatsapp') {
+                            labelPhone.textContent = 'Número de WhatsApp con código de país';
+                            inputPhone.placeholder = 'Ej. +584141234567';
+                        } else if (type === 'pagomovil') {
+                            labelPhone.textContent = 'Número de Teléfono Pago Móvil';
+                            inputPhone.placeholder = 'Ej. 04141234567';
+                        } else if (type === 'zelle') {
+                            labelPhone.textContent = 'Número de Teléfono Zelle (si aplica)';
+                            inputPhone.placeholder = 'Ej. +1 555 123 4567';
+                        }
+                    }
+
+                    if (labelEmail && inputEmail) {
+                        if (type === 'binance') {
+                            labelEmail.textContent = 'Paymail o Correo de Binance (opcional)';
+                            inputEmail.placeholder = 'Ej. binance@mitienda.com';
+                        } else {
+                            labelEmail.textContent = 'Correo Electrónico Zelle';
+                            inputEmail.placeholder = 'Ej. pagos@mitienda.com';
+                        }
                     }
                 }
 
-                // Phone
-                const showPhone = (type === 'pagomovil' || type === 'zelle' || type === 'whatsapp');
-                toggle(groupPhone, showPhone);
+                window.syncAccountFields = syncAccountFields;
 
-                // Email
-                const showEmail = (type === 'zelle' || type === 'binance');
-                toggle(groupEmail, showEmail);
-
-                // Grid column span for Phone & Email
-                if (groupPhone && groupEmail) {
-                    if (showPhone && !showEmail) {
-                        groupPhone.classList.add('md:col-span-2');
-                    } else {
-                        groupPhone.classList.remove('md:col-span-2');
+                // Event delegation at document level survives Bagisto Vue 3 app mounting
+                document.addEventListener('change', function (event) {
+                    if (event.target && event.target.id === 'account-type') {
+                        syncAccountFields(event.target.value);
                     }
+                });
 
-                    if (showEmail && !showPhone) {
-                        groupEmail.classList.add('md:col-span-2');
-                    } else {
-                        groupEmail.classList.remove('md:col-span-2');
-                    }
+                document.addEventListener('DOMContentLoaded', function () {
+                    syncAccountFields();
+                });
+
+                window.addEventListener('load', function () {
+                    setTimeout(syncAccountFields, 50);
+                });
+
+                if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                    setTimeout(syncAccountFields, 20);
                 }
-
-                // Binance ID
-                const showBinance = (type === 'binance');
-                toggle(groupBinanceId, showBinance);
-
-                // QR Code (optional for Pago Móvil, Zelle, Binance, WhatsApp; not typical for Bank Transfer)
-                const showQr = (type !== 'bank_transfer');
-                toggle(groupQrCode, showQr);
-
-                // Contextual labels & placeholders
-                if (labelHolderName) {
-                    if (type === 'whatsapp') {
-                        labelHolderName.innerHTML = 'Nombre del Asesor / Contacto <span class="text-rose-500">*</span>';
-                        if (inputHolderName) inputHolderName.placeholder = 'Ej. Soporte Ventas / Carlos Pérez';
-                    } else if (type === 'binance') {
-                        labelHolderName.innerHTML = 'Nombre o Alias en Binance <span class="text-rose-500">*</span>';
-                        if (inputHolderName) inputHolderName.placeholder = 'Ej. MiTienda Oficial';
-                    } else if (type === 'zelle') {
-                        labelHolderName.innerHTML = 'Nombre del Titular Zelle <span class="text-rose-500">*</span>';
-                        if (inputHolderName) inputHolderName.placeholder = 'Nombre registrado en la cuenta Zelle';
-                    } else {
-                        labelHolderName.innerHTML = 'Nombre del Titular <span class="text-rose-500">*</span>';
-                        if (inputHolderName) inputHolderName.placeholder = 'Nombre del Titular de la cuenta';
-                    }
-                }
-
-                if (labelPhone && inputPhone) {
-                    if (type === 'whatsapp') {
-                        labelPhone.textContent = 'Número de WhatsApp con código de país';
-                        inputPhone.placeholder = 'Ej. +584141234567';
-                    } else if (type === 'pagomovil') {
-                        labelPhone.textContent = 'Número de Teléfono Pago Móvil';
-                        inputPhone.placeholder = 'Ej. 04141234567';
-                    } else if (type === 'zelle') {
-                        labelPhone.textContent = 'Número de Teléfono Zelle (si aplica)';
-                        inputPhone.placeholder = 'Ej. +1 555 123 4567';
-                    }
-                }
-
-                if (labelEmail && inputEmail) {
-                    if (type === 'binance') {
-                        labelEmail.textContent = 'Paymail o Correo de Binance (opcional)';
-                        inputEmail.placeholder = 'Ej. binance@mitienda.com';
-                    } else {
-                        labelEmail.textContent = 'Correo Electrónico Zelle';
-                        inputEmail.placeholder = 'Ej. pagos@mitienda.com';
-                    }
-                }
-            }
-
-            typeSelect.addEventListener('change', updateFields);
-            updateFields();
-        });
-    </script>
+            })();
+        </script>
+    @endPushOnce
 </x-admin::layouts>
