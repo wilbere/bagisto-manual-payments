@@ -17,7 +17,7 @@
 
                 <h1 class="text-xl font-bold text-gray-800 dark:text-white">
                     Conciliación #{{ $receipt->id }} &mdash; Pedido
-                    <a class="text-blue-600 hover:underline" href="{{ route_has('admin.sales.orders.view') ? route('admin.sales.orders.view', $receipt->order_id) : '#' }}">
+                    <a class="text-blue-600 hover:underline" href="{{ Route::has('admin.sales.orders.view') ? route('admin.sales.orders.view', $receipt->order_id) : '#' }}">
                         #{{ $receipt->order_id }}
                     </a>
                 </h1>

@@ -25,9 +25,14 @@ if (! class_exists(\Webkul\DataGrid\DataGrid::class)) {
             $this->actions[] = $action;
         }
 
-        public function toJson(): mixed
+        public function process(): mixed
         {
             return response()->json(['records' => []]);
+        }
+
+        public function toJson(): mixed
+        {
+            return $this->process();
         }
     }
 

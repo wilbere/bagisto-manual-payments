@@ -16,7 +16,7 @@ class AccountController extends Controller
     public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(ManualPaymentAccountsDataGrid::class)->toJson();
+            return app(ManualPaymentAccountsDataGrid::class)->process();
         }
 
         return view('manual_payments::admin.accounts.index');

@@ -25,9 +25,14 @@ if (! class_exists(\Webkul\DataGrid\DataGrid::class)) {
             $this->actions[] = $action;
         }
 
-        public function toJson(): mixed
+        public function process(): mixed
         {
             return response()->json(['records' => []]);
+        }
+
+        public function toJson(): mixed
+        {
+            return $this->process();
         }
     }
 
@@ -36,6 +41,7 @@ if (! class_exists(\Webkul\DataGrid\DataGrid::class)) {
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Webkul\DataGrid\DataGrid;
 
 class ManualPaymentReceiptsDataGrid extends DataGrid
@@ -88,7 +94,7 @@ class ManualPaymentReceiptsDataGrid extends DataGrid
             'sortable' => true,
             'filterable' => true,
             'closure' => function ($row) {
-                if (route_has('admin.sales.orders.view')) {
+                if (Route::has('admin.sales.orders.view')) {
                     return '<a class="text-blue-600 hover:underline font-semibold" href="'.route('admin.sales.orders.view', $row->order_id).'">#'.$row->order_id.'</a>';
                 }
 

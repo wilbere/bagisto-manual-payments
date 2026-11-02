@@ -22,7 +22,7 @@ class ReceiptController extends Controller
     public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(ManualPaymentReceiptsDataGrid::class)->toJson();
+            return app(ManualPaymentReceiptsDataGrid::class)->process();
         }
 
         return view('manual_payments::admin.receipts.index');
