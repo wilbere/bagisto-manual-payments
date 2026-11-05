@@ -57,12 +57,12 @@
 
         <!-- Amount and Countdown Banner -->
         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="md:col-span-2 rounded-2xl bg-gradient-to-br from-navyBlue to-blue-900 text-white p-6 md:p-8 shadow-lg flex flex-col justify-between">
+            <div class="md:col-span-2 rounded-2xl text-white p-6 md:p-8 shadow-lg flex flex-col justify-between bg-[#18181b]" style="background: linear-gradient(135deg, #18181b 0%, #27272a 100%) !important; color: #ffffff !important;">
                 <div>
-                    <span class="text-xs uppercase font-semibold tracking-wider text-blue-200">
+                    <span class="text-xs uppercase font-semibold tracking-wider text-[#ded5c3]" style="color: #ded5c3 !important;">
                         @lang('manual_payments::app.shop.total_to_pay')
                     </span>
-                    <div class="text-3xl md:text-4xl font-extrabold mt-2 tracking-tight">
+                    <div class="text-3xl md:text-4xl font-extrabold mt-2 tracking-tight text-white" style="color: #ffffff !important;">
                         @if ($receipt->paid_currency === 'VES')
                             Bs. {{ number_format((float) $receipt->paid_amount, 2, ',', '.') }}
                         @elseif ($receipt->paid_currency === 'USDT')
@@ -74,7 +74,7 @@
                 </div>
 
                 @if ($receipt->paid_currency === 'VES' && $receipt->exchange_rate)
-                    <p class="text-xs text-blue-200 mt-4 bg-white/10 rounded-lg p-2.5 backdrop-blur-xs">
+                    <p class="text-xs text-[#ded5c3] mt-4 bg-white/10 rounded-lg p-2.5 backdrop-blur-xs" style="color: #ded5c3 !important;">
                         @lang('manual_payments::app.shop.bcv_rate_info', [
                             'rate' => number_format((float) $receipt->exchange_rate, 4, ',', '.')
                         ])
@@ -82,8 +82,8 @@
                 @endif
             </div>
 
-            <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-xs flex flex-col justify-center items-center text-center">
-                <span class="text-xs uppercase font-semibold tracking-wider text-gray-500">
+            <div class="rounded-2xl border border-[#ede8dc] bg-[#fdfbf7] p-6 shadow-xs flex flex-col justify-center items-center text-center">
+                <span class="text-xs uppercase font-semibold tracking-wider text-[#71717a]">
                     @lang('manual_payments::app.shop.countdown_text')
                 </span>
 
@@ -91,7 +91,7 @@
                     <div id="countdown-timer" class="text-3xl font-mono font-bold text-rose-600 mt-3" data-expire="{{ $receipt->expires_at->toIso8601String() }}">
                         --:--
                     </div>
-                    <span class="text-xs text-gray-400 mt-1">minutos : segundos</span>
+                    <span class="text-xs text-[#a1a1aa] mt-1">minutos : segundos</span>
                 @elseif ($receipt->isExpired())
                     <span class="text-rose-600 font-bold mt-2">@lang('manual_payments::app.shop.expired_notice')</span>
                 @else
@@ -189,35 +189,35 @@
         <!-- Bank Accounts Section -->
         @if ($accounts->isNotEmpty())
             <div class="mt-10">
-                <h2 class="text-xl font-bold text-gray-900">
+                <h2 class="text-xl font-bold text-[#18181b]">
                     @lang('manual_payments::app.shop.bank_accounts_title')
                 </h2>
-                <p class="text-sm text-gray-500 mt-1">
+                <p class="text-sm text-[#71717a] mt-1">
                     @lang('manual_payments::app.shop.bank_accounts_desc')
                 </p>
 
                 <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
                     @foreach ($accounts as $account)
-                        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs hover:border-blue-400 transition">
-                            <div class="flex items-center justify-between pb-3 border-b border-gray-100">
-                                <span class="font-bold text-gray-900">{{ $account->title }}</span>
-                                <span class="text-xs px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-medium">
+                        <div class="rounded-2xl border border-[#ede8dc] bg-white p-5 shadow-xs hover:border-[#9e8464] transition">
+                            <div class="flex items-center justify-between pb-3 border-b border-[#ede8dc]">
+                                <span class="font-bold text-[#18181b]">{{ $account->title }}</span>
+                                <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#fdfbf7] border border-[#ede8dc] text-[#9e8464] font-semibold">
                                     {{ $account->bank_name ?? $account->type_name }}
                                 </span>
                             </div>
 
-                            <div class="mt-3 space-y-2 text-sm text-gray-600">
+                            <div class="mt-3 space-y-2 text-sm text-[#52525b]">
                                 <div class="flex items-center justify-between">
-                                    <span class="text-gray-400">@lang('manual_payments::app.shop.account_holder'):</span>
-                                    <span class="font-medium text-gray-800">{{ $account->holder_name }}</span>
+                                    <span class="text-[#71717a]">@lang('manual_payments::app.shop.account_holder'):</span>
+                                    <span class="font-medium text-[#18181b]">{{ $account->holder_name }}</span>
                                 </div>
 
                                 @if ($account->holder_id)
                                     <div class="flex items-center justify-between">
-                                        <span class="text-gray-400">@lang('manual_payments::app.shop.holder_id'):</span>
+                                        <span class="text-[#71717a]">@lang('manual_payments::app.shop.holder_id'):</span>
                                         <div class="flex items-center gap-2">
-                                            <span class="font-mono font-medium text-gray-800">{{ $account->holder_id }}</span>
-                                            <button type="button" onclick="copyText('{{ $account->holder_id }}', this)" class="text-xs text-blue-600 hover:underline">
+                                            <span class="font-mono font-medium text-[#18181b]">{{ $account->holder_id }}</span>
+                                            <button type="button" onclick="copyText('{{ $account->holder_id }}', this)" class="text-xs font-semibold text-[#9e8464] hover:underline cursor-pointer" style="color: #9e8464 !important;">
                                                 @lang('manual_payments::app.shop.copy')
                                             </button>
                                         </div>
@@ -226,10 +226,10 @@
 
                                 @if ($account->phone)
                                     <div class="flex items-center justify-between">
-                                        <span class="text-gray-400">@lang('manual_payments::app.shop.phone'):</span>
+                                        <span class="text-[#71717a]">@lang('manual_payments::app.shop.phone'):</span>
                                         <div class="flex items-center gap-2">
-                                            <span class="font-mono font-medium text-gray-800">{{ $account->phone }}</span>
-                                            <button type="button" onclick="copyText('{{ $account->phone }}', this)" class="text-xs text-blue-600 hover:underline">
+                                            <span class="font-mono font-medium text-[#18181b]">{{ $account->phone }}</span>
+                                            <button type="button" onclick="copyText('{{ $account->phone }}', this)" class="text-xs font-semibold text-[#9e8464] hover:underline cursor-pointer" style="color: #9e8464 !important;">
                                                 @lang('manual_payments::app.shop.copy')
                                             </button>
                                         </div>
@@ -238,10 +238,10 @@
 
                                 @if ($account->account_number)
                                     <div class="flex items-center justify-between flex-wrap gap-1">
-                                        <span class="text-gray-400">@lang('manual_payments::app.shop.account_number'):</span>
+                                        <span class="text-[#71717a]">@lang('manual_payments::app.shop.account_number'):</span>
                                         <div class="flex items-center gap-2">
-                                            <span class="font-mono text-xs font-medium text-gray-800">{{ $account->account_number }}</span>
-                                            <button type="button" onclick="copyText('{{ $account->account_number }}', this)" class="text-xs text-blue-600 hover:underline">
+                                            <span class="font-mono text-xs font-medium text-[#18181b]">{{ $account->account_number }}</span>
+                                            <button type="button" onclick="copyText('{{ $account->account_number }}', this)" class="text-xs font-semibold text-[#9e8464] hover:underline cursor-pointer" style="color: #9e8464 !important;">
                                                 @lang('manual_payments::app.shop.copy')
                                             </button>
                                         </div>
@@ -250,10 +250,10 @@
 
                                 @if ($account->email)
                                     <div class="flex items-center justify-between">
-                                        <span class="text-gray-400">@lang('manual_payments::app.shop.email'):</span>
+                                        <span class="text-[#71717a]">@lang('manual_payments::app.shop.email'):</span>
                                         <div class="flex items-center gap-2">
-                                            <span class="font-medium text-gray-800">{{ $account->email }}</span>
-                                            <button type="button" onclick="copyText('{{ $account->email }}', this)" class="text-xs text-blue-600 hover:underline">
+                                            <span class="font-medium text-[#18181b]">{{ $account->email }}</span>
+                                            <button type="button" onclick="copyText('{{ $account->email }}', this)" class="text-xs font-semibold text-[#9e8464] hover:underline cursor-pointer" style="color: #9e8464 !important;">
                                                 @lang('manual_payments::app.shop.copy')
                                             </button>
                                         </div>
@@ -262,10 +262,10 @@
 
                                 @if ($account->binance_id)
                                     <div class="flex items-center justify-between">
-                                        <span class="text-gray-400">@lang('manual_payments::app.shop.binance_id'):</span>
+                                        <span class="text-[#71717a]">@lang('manual_payments::app.shop.binance_id'):</span>
                                         <div class="flex items-center gap-2">
-                                            <span class="font-mono font-medium text-gray-800">{{ $account->binance_id }}</span>
-                                            <button type="button" onclick="copyText('{{ $account->binance_id }}', this)" class="text-xs text-blue-600 hover:underline">
+                                            <span class="font-mono font-medium text-[#18181b]">{{ $account->binance_id }}</span>
+                                            <button type="button" onclick="copyText('{{ $account->binance_id }}', this)" class="text-xs font-semibold text-[#9e8464] hover:underline cursor-pointer" style="color: #9e8464 !important;">
                                                 @lang('manual_payments::app.shop.copy')
                                             </button>
                                         </div>
@@ -274,7 +274,7 @@
                             </div>
 
                             @if ($account->instructions)
-                                <div class="mt-3 pt-3 border-t border-gray-100 text-xs text-gray-500 italic">
+                                <div class="mt-3 pt-3 border-t border-[#ede8dc] text-xs text-[#71717a] italic">
                                     {{ $account->instructions }}
                                 </div>
                             @endif
@@ -286,8 +286,8 @@
 
         <!-- Submission Form (Visible when submission is allowed) -->
         @if ($receipt->canBeSubmitted())
-            <div class="mt-12 rounded-2xl border border-gray-200 bg-white p-6 md:p-8 shadow-xs">
-                <h2 class="text-xl font-bold text-gray-900">
+            <div class="mt-12 rounded-2xl border border-[#ede8dc] bg-white p-6 md:p-8 shadow-xs">
+                <h2 class="text-xl font-bold text-[#18181b]">
                     @lang('manual_payments::app.shop.form_title')
                 </h2>
 
@@ -301,10 +301,10 @@
 
                     @if ($accounts->isNotEmpty())
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700">
+                            <label class="block text-sm font-semibold text-[#18181b]">
                                 @lang('manual_payments::app.shop.destination_account')
                             </label>
-                            <select name="payment_account_id" class="mt-1 block w-full rounded-xl border border-gray-300 py-2.5 px-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                            <select name="payment_account_id" class="mt-1 block w-full rounded-xl border border-[#ede8dc] bg-[#fdfbf7] py-2.5 px-3 text-sm focus:border-[#9e8464] focus:ring-1 focus:ring-[#9e8464]">
                                 <option value="">@lang('manual_payments::app.shop.select_account')</option>
                                 @foreach ($accounts as $acc)
                                     <option value="{{ $acc->id }}" {{ old('payment_account_id', $receipt->payment_account_id) == $acc->id ? 'selected' : '' }}>
@@ -319,10 +319,10 @@
                         <!-- Origin Bank -->
                         @if (in_array($receipt->payment_method, ['manual_pagomovil', 'manual_bank_transfer']))
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700">
+                                <label class="block text-sm font-semibold text-[#18181b]">
                                     @lang('manual_payments::app.shop.origin_bank')
                                 </label>
-                                <select name="payer_bank" class="mt-1 block w-full rounded-xl border border-gray-300 py-2.5 px-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                                <select name="payer_bank" class="mt-1 block w-full rounded-xl border border-[#ede8dc] bg-[#fdfbf7] py-2.5 px-3 text-sm focus:border-[#9e8464] focus:ring-1 focus:ring-[#9e8464]">
                                     <option value="">@lang('manual_payments::app.shop.select_origin_bank')</option>
                                     @foreach ($banks as $code => $name)
                                         <option value="{{ $name }}" {{ old('payer_bank', $receipt->payer_bank) == $name ? 'selected' : '' }}>
@@ -335,7 +335,7 @@
 
                         <!-- Reference Number -->
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700">
+                            <label class="block text-sm font-semibold text-[#18181b]">
                                 @lang('manual_payments::app.shop.reference_number') <span class="text-rose-500">*</span>
                             </label>
                             <input
@@ -344,7 +344,7 @@
                                 required
                                 value="{{ old('reference_number', $receipt->reference_number) }}"
                                 placeholder="@lang('manual_payments::app.shop.reference_placeholder')"
-                                class="mt-1 block w-full rounded-xl border border-gray-300 py-2.5 px-3 text-sm font-mono focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                class="mt-1 block w-full rounded-xl border border-[#ede8dc] bg-[#fdfbf7] py-2.5 px-3 text-sm font-mono focus:border-[#9e8464] focus:ring-1 focus:ring-[#9e8464]"
                             >
                             @error('reference_number')
                                 <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span>
@@ -353,21 +353,21 @@
 
                         <!-- Payer Name -->
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700">
+                            <label class="block text-sm font-semibold text-[#18181b]">
                                 @lang('manual_payments::app.shop.payer_name')
                             </label>
                             <input
                                 type="text"
                                 name="payer_name"
                                 value="{{ old('payer_name', $receipt->payer_name) }}"
-                                class="mt-1 block w-full rounded-xl border border-gray-300 py-2.5 px-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                class="mt-1 block w-full rounded-xl border border-[#ede8dc] bg-[#fdfbf7] py-2.5 px-3 text-sm focus:border-[#9e8464] focus:ring-1 focus:ring-[#9e8464]"
                             >
                         </div>
 
                         <!-- Payer ID / Phone -->
                         @if ($receipt->payment_method === 'manual_pagomovil')
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700">
+                                <label class="block text-sm font-semibold text-[#18181b]">
                                     @lang('manual_payments::app.shop.payer_phone')
                                 </label>
                                 <input
@@ -375,19 +375,19 @@
                                     name="payer_phone"
                                     value="{{ old('payer_phone', $receipt->payer_phone) }}"
                                     placeholder="Ej. 04141234567"
-                                    class="mt-1 block w-full rounded-xl border border-gray-300 py-2.5 px-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                    class="mt-1 block w-full rounded-xl border border-[#ede8dc] bg-[#fdfbf7] py-2.5 px-3 text-sm focus:border-[#9e8464] focus:ring-1 focus:ring-[#9e8464]"
                                 >
                             </div>
                         @elseif ($receipt->payment_method === 'manual_zelle')
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700">
+                                <label class="block text-sm font-semibold text-[#18181b]">
                                     @lang('manual_payments::app.shop.payer_email')
                                 </label>
                                 <input
                                     type="email"
                                     name="payer_email"
                                     value="{{ old('payer_email', $receipt->payer_email) }}"
-                                    class="mt-1 block w-full rounded-xl border border-gray-300 py-2.5 px-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                    class="mt-1 block w-full rounded-xl border border-[#ede8dc] bg-[#fdfbf7] py-2.5 px-3 text-sm focus:border-[#9e8464] focus:ring-1 focus:ring-[#9e8464]"
                                 >
                             </div>
                         @endif
@@ -395,23 +395,23 @@
 
                     <!-- Voucher Upload -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700">
+                        <label class="block text-sm font-semibold text-[#18181b]">
                             @lang('manual_payments::app.shop.proof_file') <span class="text-rose-500">*</span>
                         </label>
-                        <div class="mt-2 flex justify-center rounded-2xl border-2 border-dashed border-gray-300 px-6 pt-5 pb-6 hover:border-blue-400 transition cursor-pointer relative" id="drop-zone">
+                        <div class="mt-2 flex justify-center rounded-2xl border-2 border-dashed border-[#ded5c3] bg-[#fdfbf7] px-6 pt-5 pb-6 hover:border-[#9e8464] transition cursor-pointer relative" id="drop-zone">
                             <div class="space-y-1 text-center">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <svg class="mx-auto h-12 w-12 text-[#b59f7f]" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <div class="flex text-sm text-gray-600 justify-center">
-                                    <label class="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-hidden">
+                                <div class="flex text-sm text-[#52525b] justify-center">
+                                    <label class="relative cursor-pointer rounded-md font-semibold text-[#9e8464] hover:text-[#7f684e] focus-within:outline-hidden">
                                         <span>Subir comprobante</span>
                                         <input id="proof-input" name="proof" type="file" required accept="image/jpeg,image/png,image/webp,application/pdf" class="sr-only">
                                     </label>
-                                    <p class="pl-1">o arrastra y suelta aquí</p>
+                                    <p class="pl-1 text-[#71717a]">o arrastra y suelta aquí</p>
                                 </div>
-                                <p class="text-xs text-gray-400">PNG, JPG, WebP o PDF hasta 5MB</p>
-                                <p id="file-name" class="text-xs font-semibold text-blue-700 hidden"></p>
+                                <p class="text-xs text-[#a1a1aa]">PNG, JPG, WebP o PDF hasta 5MB</p>
+                                <p id="file-name" class="text-xs font-semibold text-emerald-700 hidden"></p>
                             </div>
                         </div>
                         @error('proof')
@@ -420,12 +420,16 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="pt-4">
+                    <div class="pt-6 border-t border-[#ede8dc]">
                         <button
                             type="submit"
-                            class="w-full md:w-auto px-8 py-3.5 bg-navyBlue hover:bg-blue-900 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
+                            class="w-full md:w-auto px-10 py-4 bg-[#18181b] hover:bg-[#9e8464] text-white font-bold text-xs uppercase tracking-widest rounded-full shadow-lg transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+                            style="background-color: #18181b !important; color: #ffffff !important; display: inline-flex !important;"
                         >
-                            {{ $receipt->isRejected() ? trans('manual_payments::app.shop.resubmit_button') : trans('manual_payments::app.shop.submit_button') }}
+                            <svg class="w-4 h-4 text-[#ded5c3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>{{ $receipt->isRejected() ? trans('manual_payments::app.shop.resubmit_button') : trans('manual_payments::app.shop.submit_button') }}</span>
                         </button>
                     </div>
                 </form>

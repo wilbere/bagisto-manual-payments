@@ -29,7 +29,8 @@
         <div>
             <a
                 href="{{ route('shop.manual_payments.receipt.show', $receipt->token) }}"
-                class="px-5 py-2.5 rounded-xl font-bold text-sm shadow-xs transition inline-block {{ $receipt->isApproved() ? 'bg-emerald-700 text-white hover:bg-emerald-800' : ($receipt->isRejected() ? 'bg-rose-700 text-white hover:bg-rose-800' : 'bg-navyBlue text-white hover:bg-blue-900') }}"
+                class="px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider shadow-xs transition inline-block {{ $receipt->isApproved() ? 'bg-emerald-700 text-white hover:bg-emerald-800' : ($receipt->isRejected() ? 'bg-rose-700 text-white hover:bg-rose-800' : 'bg-[#18181b] text-white hover:bg-[#9e8464]') }}"
+                style="{{ ! $receipt->isApproved() && ! $receipt->isRejected() ? 'background-color: #18181b !important; color: #ffffff !important;' : '' }}"
             >
                 {{ $receipt->isPendingSubmission() ? 'Subir Comprobante' : ($receipt->isRejected() ? 'Reenviar Comprobante' : 'Ver Detalles del Pago') }}
             </a>
